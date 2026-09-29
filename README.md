@@ -1,5 +1,7 @@
 # openapi-crud-gen
-
+[![PyPI version](https://badge.fury.io/py/openapi-crud-gen.svg)](https://pypi.org/project/openapi-crud-gen/)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 从 OpenAPI 3.x 描述文件生成 pytest + requests 的 CRUD 测试骨架。
 
 `openapi-crud-gen` 是一个**纯静态代码生成 CLI**：它读取 OpenAPI 3.0 / 3.1 文档（YAML 或 JSON），
