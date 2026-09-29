@@ -13,6 +13,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   `--base-url`, run pytest).
 - `--help` now ends with a copy-pasteable example command.
 - `--version` flag reporting the installed version.
+- `docs/TUTORIAL.md`: end-to-end walkthrough (start a service, `--dry-run`, generate, read the
+  failing run, fill the TODOs, go green, reuse ids with a fixture, env-var `BASE_URL`, CI hookup).
+- `examples/tutorial/`: a strict stateful sample backend plus its OpenAPI document, so the
+  tutorial can show why the generated TODOs decide pass or fail.
 
 ### Changed
 

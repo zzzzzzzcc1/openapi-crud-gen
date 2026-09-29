@@ -10,6 +10,8 @@
 
 ## 快速上手（60 秒）
 
+想跟着一步步走（真实输出、为什么必须填 TODO、怎么接进 CI），看 [docs/TUTORIAL.md](docs/TUTORIAL.md)。
+
 ```bash
 pip install -e ".[dev]"                                             # 1. 安装（含 pytest/requests）
 openapi-crud-gen examples/openapi.yaml --output-dir tests/generated # 2. 生成骨架

@@ -1,0 +1,68 @@
+openapi: 3.0.3
+info:
+  title: Tutorial User API
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:8000
+paths:
+  /users:
+    get:
+      summary: 获取用户列表
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: 创建用户
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name:
+                  type: string
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: name 缺失
+  /users/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: 获取用户详情
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: 用户不存在
+    put:
+      summary: 更新用户
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name:
+                  type: string
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: 用户不存在
+    delete:
+      summary: 删除用户
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: 用户不存在
