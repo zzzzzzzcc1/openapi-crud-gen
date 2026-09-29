@@ -13,7 +13,7 @@
 想跟着一步步走（真实输出、为什么必须填 TODO、怎么接进 CI），看 [docs/TUTORIAL.md](docs/TUTORIAL.md)。
 
 ```bash
-pip install -e ".[dev]"                                             # 1. 安装（含 pytest/requests）
+pip install -e .                                                    # 1. 安装（pytest/requests 已在核心依赖里）
 openapi-crud-gen examples/openapi.yaml --output-dir tests/generated # 2. 生成骨架
 python examples/mock_api.py                                         # 3. 另开一个终端：起个假后端
 pytest tests/generated                                              # 4. 看到 5 passed
@@ -40,8 +40,8 @@ Next steps:
 `python examples/mock_api.py`；也可以换地址重新生成：`--base-url http://127.0.0.1:9000`。
 
 **`requests` 报 `ModuleNotFoundError`**
-跑 pytest 用的那个解释器里没装 `requests`。用你的项目环境执行 `pip install -e ".[dev]"`，
-或直接 `pip install requests`。
+`requests` 已经随本工具一起装好，出现这个错说明跑 pytest 的解释器**不是装工具的那个**。
+在跑测试的环境里执行 `pip install openapi-crud-gen`（源码目录用 `pip install .`）。
 
 **为什么路径参数是 `id = None`**
 骨架不知道你的真实 ID。写成 `None` 是为了避免运行时 `NameError`，跑之前替换成真实值。
@@ -63,26 +63,24 @@ Next steps:
 
 需要 Python 3.10+。
 
-**从源码装（现在就能用）**
-
 ```bash
-pip install ".[dev]"           # 在项目根目录执行
-pip install -e ".[dev]"        # 要改代码时用可编辑安装
-uv pip install -e ".[dev]"     # 用 uv 也一样
+pip install openapi-crud-gen     # 工具 + pytest + requests，一条命令把环境装好
 ```
 
-**从 PyPI 装（包发布之后）**
+`pytest` 与 `requests` 是核心依赖（生成的测试要用它们跑），装完就能直接
+`pytest tests/generated`，不会出现 `ModuleNotFoundError: No module named 'requests'`。
+
+**从源码装（仓库尚未发布到 PyPI 时）**
 
 ```bash
-pip install openapi-crud-gen            # 只要命令行工具
-pip install "openapi-crud-gen[dev]"     # 工具 + pytest + requests，装完就能跑生成出来的测试
+pip install .            # 在项目根目录执行
+pip install -e .         # 要改代码时用可编辑安装
+pip install ".[dev]"     # 额外装上 pytest-cov，用于跑覆盖率门槛
+uv pip install -e .      # 用 uv 也一样
 ```
 
-为什么推荐带 `[dev]`：生成的测试用 `pytest` 跑、用 `requests` 发请求，这两个在 `[dev]`
-里一起装好，省得回头碰上 `ModuleNotFoundError: No module named 'requests'`。
-
-> 当前仓库还没上传 PyPI，所以现在请用"从源码装"；发布准备已经做完（元数据、`twine check`、
-> wheel 内含模板），发布命令见下面的"发布到 PyPI"。
+> `pip install openapi-crud-gen` 要等包上传 PyPI 后才有效；发布准备已完成（PEP 639 元数据、
+> `twine check` 双 PASSED、wheel 内含模板），发布命令见下面的"发布到 PyPI"。
 
 ## 使用
 
@@ -323,7 +321,7 @@ python -m pip install build twine
 python -m build                  # 产物在 dist/：wheel + sdist
 python -m twine check dist/*     # 两个都要 PASSED
 python -m twine upload dist/*    # 需要 PyPI API token
-pip install "openapi-crud-gen[dev]"   # 发布后从 PyPI 复验一次
+pip install openapi-crud-gen          # 发布后从 PyPI 复验一次
 ```
 
 发布前清单：

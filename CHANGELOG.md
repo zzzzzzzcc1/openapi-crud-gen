@@ -27,6 +27,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - README install section covers both paths, including the one-command
   `pip install "openapi-crud-gen[dev]"` that also brings `pytest` and `requests`; the PyPI
   section is now a release checklist.
+- `pytest` and `requests` moved from the `dev` extra into the core dependencies, so a bare
+  `pip install openapi-crud-gen` is enough to generate *and* run the generated tests.
+  The `dev` extra now only adds `pytest-cov`.
 
 ## [0.1.0] - 2026-09-29
 

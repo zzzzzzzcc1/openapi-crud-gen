@@ -128,6 +128,8 @@
 - 生成文件的源模板是 `src/openapi_crud_gen/templates/test_crud.py.j2`，`FileSystemLoader` 走 `__file__` 相对路径；改模板后要验证 wheel 里带上了它。
 - 生成的用例会真的发请求：没有服务在监听时会抛 `ConnectionError`（WinError 10061），这是预期行为，用 `examples/mock_api.py` 可以本地试跑。
 - 版本号三处必须同步：`pyproject.toml`、`__init__.py`、`CHANGELOG.md`。
+- `pytest` 与 `requests` **刻意**放在核心依赖里（不是 `dev` 额外项）：目标是裸装
+  `pip install openapi-crud-gen` 就能生成并跑通生成物。不要以"瘦身"为理由挪回 `dev`。
 
 ## 已知未验证项（不要假装验证过）
 
