@@ -316,23 +316,6 @@ pytest --cov=openapi_crud_gen --cov-fail-under=80     # 加上覆盖率门槛（
 - CI：`.github/workflows/test.yml` 在 push / PR 上运行 Python 3.10、3.11、3.12 矩阵，
   包含全量测试与一次 CLI 冒烟（生成 + `pytest --collect-only`）。
 
-### 发布到 PyPI（可选）
-
-```bash
-python -m pip install build twine
-python -m build                  # 产物在 dist/：wheel + sdist
-python -m twine check dist/*     # 两个都要 PASSED
-python -m twine upload dist/*    # 需要 PyPI API token
-pip install openapi-crud-gen          # 发布后从 PyPI 复验一次
-```
-
-发布前清单：
-
-- [ ] `pyproject.toml`、`src/openapi_crud_gen/__init__.py`、`CHANGELOG.md` 三处版本号一致
-- [ ] `pytest --cov=openapi_crud_gen --cov-fail-under=80` 通过
-- [ ] `twine check dist/*` 全 PASSED
-- [ ] 补 `[project.urls]`（仓库 / Issues 地址）与作者信息，目前刻意留空以免写错地址
-- [ ] 打 tag：`git tag v0.1.0 && git push origin v0.1.0`
 
 ## License
 
