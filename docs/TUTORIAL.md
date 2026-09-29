@@ -27,6 +27,10 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -e ".[dev]"
 ```
 
+不在这个仓库里的话，用 `pip install "openapi-crud-gen[dev]"`（PyPI 发布后）或
+`pip install ".[dev]"`（从源码）也一样：`[dev]` 会把 `pytest`、`requests` 一并装好，
+后面第 5 步才能直接跑。
+
 装完确认一下：
 
 ```powershell

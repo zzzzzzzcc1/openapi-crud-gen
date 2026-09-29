@@ -22,6 +22,11 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - README gained a 60-second quickstart and an FAQ covering connection errors, missing
   `requests`, `id = None` placeholders, status-code mismatches and skip/overwrite behaviour.
+- Packaging metadata now uses PEP 639 (`license = "MIT"` plus `license-files`), so the wheel
+  carries `License-Expression` and `License-File`; the deprecated license classifier is gone.
+- README install section covers both paths, including the one-command
+  `pip install "openapi-crud-gen[dev]"` that also brings `pytest` and `requests`; the PyPI
+  section is now a release checklist.
 
 ## [0.1.0] - 2026-09-29
 

@@ -61,17 +61,28 @@ Next steps:
 
 ## 安装
 
-```bash
-pip install -e .
-# 或
-uv pip install -e .
-```
+需要 Python 3.10+。
 
-需要 Python 3.10+。开发依赖（pytest、pytest-cov、requests）：
+**从源码装（现在就能用）**
 
 ```bash
-pip install -e ".[dev]"
+pip install ".[dev]"           # 在项目根目录执行
+pip install -e ".[dev]"        # 要改代码时用可编辑安装
+uv pip install -e ".[dev]"     # 用 uv 也一样
 ```
+
+**从 PyPI 装（包发布之后）**
+
+```bash
+pip install openapi-crud-gen            # 只要命令行工具
+pip install "openapi-crud-gen[dev]"     # 工具 + pytest + requests，装完就能跑生成出来的测试
+```
+
+为什么推荐带 `[dev]`：生成的测试用 `pytest` 跑、用 `requests` 发请求，这两个在 `[dev]`
+里一起装好，省得回头碰上 `ModuleNotFoundError: No module named 'requests'`。
+
+> 当前仓库还没上传 PyPI，所以现在请用"从源码装"；发布准备已经做完（元数据、`twine check`、
+> wheel 内含模板），发布命令见下面的"发布到 PyPI"。
 
 ## 使用
 
@@ -308,10 +319,20 @@ pytest --cov=openapi_crud_gen --cov-fail-under=80     # 加上覆盖率门槛（
 ### 发布到 PyPI（可选）
 
 ```bash
-pip install build twine
-python -m build
-python -m twine upload dist/*
+python -m pip install build twine
+python -m build                  # 产物在 dist/：wheel + sdist
+python -m twine check dist/*     # 两个都要 PASSED
+python -m twine upload dist/*    # 需要 PyPI API token
+pip install "openapi-crud-gen[dev]"   # 发布后从 PyPI 复验一次
 ```
+
+发布前清单：
+
+- [ ] `pyproject.toml`、`src/openapi_crud_gen/__init__.py`、`CHANGELOG.md` 三处版本号一致
+- [ ] `pytest --cov=openapi_crud_gen --cov-fail-under=80` 通过
+- [ ] `twine check dist/*` 全 PASSED
+- [ ] 补 `[project.urls]`（仓库 / Issues 地址）与作者信息，目前刻意留空以免写错地址
+- [ ] 打 tag：`git tag v0.1.0 && git push origin v0.1.0`
 
 ## License
 
