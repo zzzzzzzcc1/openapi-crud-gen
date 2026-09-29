@@ -1,0 +1,28 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      - name: Run test suite with coverage gate
+        run: pytest --cov=openapi_crud_gen --cov-report=term-missing --cov-fail-under=80
+      - name: Smoke test the CLI on the example spec
+        run: |
+          openapi-crud-gen examples/openapi.yaml --output-dir build/generated --base-url http://localhost:8000
+          python -m pytest --collect-only -q build/generated

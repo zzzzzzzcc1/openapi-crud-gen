@@ -1,0 +1,127 @@
+openapi: 3.0.3
+info:
+  title: Fixture API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+paths:
+  /users:
+    get:
+      operationId: listUsers
+      summary: List users
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+    post:
+      operationId: createUser
+      summary: Create user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+  /users/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      operationId: getUser
+      summary: Get user detail
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+    put:
+      operationId: replaceUser
+      summary: Replace user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+    patch:
+      operationId: patchUser
+      summary: Patch user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+    delete:
+      operationId: deleteUser
+      summary: Delete user
+      responses:
+        '204':
+          description: No Content
+  /users/{id}/posts:
+    get:
+      operationId: listUserPosts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+  /orders:
+    get:
+      operationId: listOrders
+      responses:
+        '200':
+          description: OK
+  /orders/{id}:
+    patch:
+      operationId: patchOrder
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: OK
+  /health:
+    x-internal: true
+    options:
+      operationId: healthOptions
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    User:
+      type: object

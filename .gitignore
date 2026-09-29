@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+
+# Tooling caches
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Output of the tool itself
+tests/generated/
+
+# Local scratch space
+work/
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
